@@ -2,4 +2,4 @@
 some of self driving project
 
 ## rqt_record_bag  
-``` record by flag ```
+![image] (https://github.com/CaiRugou/Autonomous/tree/main/img/record_bag_1.png)
