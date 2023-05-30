@@ -97,7 +97,7 @@ $$
 则称：
 
 $$
-  f_X(x) = \begin{cases}p(x)=P(X=x), x\in{x_i}, i=1,2,3,... \\ 0, 其它 \end{cases}
+  f_X(x) = \begin {cases} p(x)=P(X=x), x\in{x_i}, i=1,2,3,... \\ 0, other \end {cases}
 $$
 
 为离散型随机变量 $X$ 的概率质量函数Probability Mass Function，PMF）。也可以采用如下的表示方法：
