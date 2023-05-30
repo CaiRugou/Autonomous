@@ -208,3 +208,42 @@ F_{X,Y}(x,y)=P(X \leq x,Y \leq y)= \int_{-\infty}^x \int_{-\infty}^y f_{X,Y}(u,v
 $$
 
 ### 边缘概率
+#### 二维离散型随机变量的边缘概率质量函数
+若二维离散型随机变量 $(X,Y)$ 所有可能得取值为
+
+$$
+(x_i,y_j), i,j=1,2,3,...
+$$
+
+且联合概率质量函数 $f_{X,Y}(x,y)$ 为：
+
+$$
+f_{X,Y}(x,y) = p(x,y)=P(X=x,Y=y),(x,y)\in {x,y},i,j=1,2,3,...
+$$
+
+对 $j$ 求和所得的函数：
+
+$$
+f_X(x)=\sum_{j=1}^\infty f_{X,Y}(x,y_i) = \sum_{j=1}^\infty P(X=x,Y=y_j) = P(X=x), x\in \{x_i\}, i=1,2,3,...
+$$
+
+称为 $X$ 的**边缘概率质量函数**（Marginal Probability Mass Function），又称边缘分布列。
+
+类似的对 $i$ 求和所得的函数：
+
+$$
+f_Y(y) = \sum_{i=1}^\infty f_{X,Y}(x_i, y) = \sum_{i=1}^\infty P(X=x, Y=y) = P(Y=y), y \in \{y_i\}, j = 1,2,3,...
+$$
+
+称为 $Y$ 的边缘概率质量函数。
+
+**二维离散型随机变量边缘概率质量函数的叠加得到了二维离散型随机变量的边缘累积分布函数（Marginal Cumulative Distribution Function）：**
+
+$$
+F_X(x) = P(X \leq x) = \sum_{u \leq x} f_X(u) = \sum_{u \leq x} \sum_{j=1}^\infty P(X=u, Y=y_i) = \sum_{u \leq x} P(X=x)
+$$
+
+$$
+F_Y(y) = P(Y \leq y) = \sum_{v \leq y}f_Y(v) = \sum_{v \leq y} \sum_{x=1}^\infty P(X=u_i, Y=y) = \sum_{v \leq y} P(Y=y)
+$$
+
