@@ -599,12 +599,12 @@ $$
 
 ### 预测推导
 
-已知 $0$ 时刻状态量随机变量 $X_0$ 的后验概率密度函数 $f^+_{X_0}(x)$ ，状态转移函数 $f(x)$，$1$ 时刻过程噪声随机变量 $Q_1$ 的概率密度函数 $f_{Q_1}(x)$，求解 $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数 $f^−_{X_1}(x)$ 。
+已知 $0$ 时刻状态量随机变量 $X_0$ 的后验概率密度函数 $f^+_{X_0}(x)$ ，状态转移函数 $f(x)$， $1$ 时刻过程噪声随机变量 $Q_1$ 的概率密度函数 $f^−_{Q_1}(x)$ ，求解 $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数 $f^−_{X_1}(x)$ 。
 
 类似二维连续型随机变量贝叶斯公式的推导过程，我们从求解 $X_1$ 的先验累积分布函数 $F^−_{X_1}$ 入手。
 
 $$
-\begin{aligned}
+\begin {aligned}
     F_{X_1}^-(x) & = P(X_1 \le x) \\
     & = \sum_{u=-\infty}^xP(X_1=u) \quad \Rightarrow \color{red}{化连续为离散无穷小的累加} \\
     & = \sum_{u=-\infty}^x\sum_{v=-\infty}^{+\infty}P(X_1=u \ | \ X_0=v)P(X_0=v) \quad \Rightarrow \color{red}{全概率公式} \\
@@ -615,7 +615,7 @@ $$
     & = \sum_{u=-\infty}^x\left\{\lim_{\epsilon \to 0}\int_{-\infty}^{+\infty}f_{Q_1}[u-f(v)]f_{X_0}^+(v)\mathrm{d}v·\epsilon \right\} \quad \Rightarrow \color{red}{积分定义} \\
     & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[u-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}u \quad \Rightarrow \color{red}{积分定义} \\
     & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[x-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}x \quad \Rightarrow \color{red}{替换自变量符号u为x}
-\end{aligned}
+\end {aligned}
 $$
 
 故， $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数为：
