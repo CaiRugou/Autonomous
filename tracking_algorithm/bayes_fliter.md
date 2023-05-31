@@ -709,7 +709,7 @@ $$f_{X_k}^+(x)=\eta_k·f_{R_k}[y_k-h(x)]·f_{X_k}^-(x)$$
 归一化常数 $η_k$：
 
 $$
-\eta_k=\left\{\int_{-\infty}^{+\infty}f_{R_k}[y_k-h(x)]f_{X_k}^-(x)\mathrm{d}x\right\}^{-1}
+\eta_k=\left \lbrace\int_{-\infty}^{+\infty}f_{R_k}[y_k-h(x)]f_{X_k}^-(x)\mathrm{d}x\right \rbrace^{-1}
 $$
 
 - 4 求解最优估计
