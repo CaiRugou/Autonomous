@@ -605,10 +605,9 @@ $$
 类似二维连续型随机变量贝叶斯公式的推导过程，我们从求解 $X_1$ 的先验累积分布函数 $F^−_{X_1}$ 入手。
 
 $$
-
 \begin{aligned}
-    F_{X_1}^-(x) & = P(X_1 \le x) \\
-    & = \sum_{u=-\infty}^xP(X_1=u) \quad \Rightarrow \color{red}{化连续为离散无穷小的累加} \\
+    F_{X_1}^-(x) & = P(X_1 \leq x) \\
+    & = \sum_{u=-\infty}^x P(X_1=u) \quad \Rightarrow \color{red}{化连续为离散无穷小的累加} \\
     & = \sum_{u=-\infty}^x\sum_{v=-\infty}^{+\infty}P(X_1=u \ | \ X_0=v)P(X_0=v) \quad \Rightarrow \color{red}{全概率公式} \\
     & = \sum_{u=-\infty}^x\sum_{v=-\infty}^{+\infty}P[X_1-f(X_0)=u-f(v) \ | \ X_0=v]P(X_0=v) \quad \Rightarrow \color{red}{条件概率里的条件可以作逻辑推导} \\
     & = \sum_{u=-\infty}^x\sum_{v=-\infty}^{+\infty}P[Q_1=u-f(v) \ | \ X_0=v]P(X_0=v) \quad \Rightarrow \color{red}{状态方程} \\
@@ -616,7 +615,7 @@ $$
     & = \sum_{u=-\infty}^x\left\{\lim_{\epsilon \to 0}\sum_{v=-\infty}^{+\infty}f_{Q_1}[u-f(v)]·\epsilon · f_{X_0}^+(v)·\epsilon \right\} \quad \Rightarrow \color{red}{类似二维连续型随机变量贝叶斯公式的推导过程，将点概率化为概率密度与无穷小的乘积} \\
     & = \sum_{u=-\infty}^x\left\{\lim_{\epsilon \to 0}\int_{-\infty}^{+\infty}f_{Q_1}[u-f(v)]f_{X_0}^+(v)\mathrm{d}v·\epsilon \right\} \quad \Rightarrow \color{red}{积分定义} \\
     & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[u-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}u \quad \Rightarrow \color{red}{积分定义} \\
-    & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[x-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}x \quad \Rightarrow \color{red}{替换自变量符号u为x}
+    & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[x-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}x \quad \Rightarrow \color{red}{替换自变量符号u为x} \\
 \end{aligned}
 
 $$
