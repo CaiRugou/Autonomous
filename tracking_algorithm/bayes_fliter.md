@@ -657,7 +657,7 @@ $$
 其中，归一化常数 $\eta_1$ 为：
 
 $$
-\eta_1=\left[\int_{-\infty}^{+\infty}f_{Y_1|X_1}(y_1 \ | \ x)f_{X_1}^-(x)\mathrm{d}x\right]^{-1}=\left\{\int_{-\infty}^{+\infty}f_{R_1}[y_1-h(x)]f_{X_1}^-(x)\mathrm{d}x\right\}^{-1}
+\eta_1=\left[\int_{-\infty}^{+\infty}f_{Y_1|X_1}(y_1 \ | \ x)f_{X_1}^-(x)\mathrm{d}x\right]^{-1}=\left \lbrace \int_{-\infty}^{+\infty}f_{R_1}[y_1-h(x)]f_{X_1}^-(x)\mathrm{d}x\right\rbrace ^{-1}
 $$
 
 
@@ -677,7 +677,7 @@ $$
 其中，归一化常数 $\eta_1$ 为：
 
 $$
-\eta_k=\left\{\int_{-\infty}^{+\infty}f_{R_k}[y_k-h(x)]f_{X_k}^-(x)\mathrm{d}x\right\}^{-1}
+\eta_k=\left \lbrace \int_{-\infty}^{+\infty}f_{R_k}[y_k-h(x)]f_{X_k}^-(x)\mathrm{d}x\right \rbrace^{-1}
 $$
 
 最终，可得到 $k$ 时刻状态量随机变量 $X_k$ 的最优估计 $\hat{x}_k$：
