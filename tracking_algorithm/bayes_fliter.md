@@ -451,7 +451,7 @@ $$
 对于二维离散型随机变量 $(X,Y)$ , 由其条件概率质量函数与全概率公式，容易得到贝叶斯公式：
 
 $$
-f_{X|Y}(x|y) = {{f_{X,Y}(x,y)} \over {f_Y(y)}} = {{f_{Y|X}((y|x)f_x(x))} \over {\sum_{i=1}^\infty f_{Y|X}(y|x_i)f_X(x_i)}}, (x,y) \in {x_i, y_j},i,j=1,2,3,...
+f_{X|Y}(x \ | \ y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}=\frac{f_{Y|X}(y \ | \ x)f_X(x)}{\sum\limits_{i=1}^{\infty}f_{Y|X}(y \ | \ x_i)f_X(x_i)}, \quad (x,y) \in \{x_i,y_j\}, i,j=1, 2, 3, ···
 $$
 
 对于连续型随机变量有类似关系。
@@ -520,15 +520,15 @@ $$y_0,y_1,y_2,⋯,y_k$$
 以贝叶斯公式为求解方向，将问题转化为求解状态量随机变量 $X_k$ 后验概率密度函数的期望：
 
 $$
-\hat{x}_k = E[f_{X_k}^+(x)]
+\hat{x}_k=E[f_{X_k}^+(x)]
 $$
 
 进而需要求解状态量随机变量 $X_k$ 的先验概率密度函数与似然概率密度函数。我们认为， $k$ 时刻的状态量随机变量 $X_k$ 与且仅与上一时刻的状态量随机变量 $X_{k−1}$ 有关， $k$ 时刻的观测量随机变量 $Y_k$ 与且仅与 $k$ 时刻的状态量随机变量 $X_k$ 有关，其中的数量关系我们分别称之为状态方程与观测方程：
 
 $$
-
 \begin{cases}
-    X_k=f(X_{k-1})+Q_k \quad \Rightarrow \color{red}{状态方程} \\ Y_k=h(X_k)+R_k \quad \Rightarrow \color{red}{观测方程}
+    X_k=f(X_{k-1})+Q_k \quad \Rightarrow \color{red}{状态方程} \\
+    Y_k=h(X_k)+R_k \quad \Rightarrow \color{red}{观测方程}
 \end{cases}
 $$
 
