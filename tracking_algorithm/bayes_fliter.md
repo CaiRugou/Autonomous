@@ -533,9 +533,9 @@ $$
 \end{cases}
 $$
 
-$f(x)$ 被称为状态转移函数，$h(x)$ 被称为观测函数。
+$f(x)$ 被称为状态转移函数， $h(x)$ 被称为观测函数。
 
-对于 $0$ 时刻的初始状态量随机变量 $X_0$ ，认为观测值 $y_0$ 即为其真值，其后验概率密度函数即为其先验概率密度函数。我们可以根据经验知识（建模精度和传感器精度）写出 $0$ 时刻的初始状态量随机变量 $X_0$ 的后验概率密度函数 $f^+_{X_0}(x)、k$ 时刻过程噪声随机变量 $Q_k$ 的概率密度函数 $f_{Q_k}(x)$ 和 $k$ 时刻观测噪声随机变量 $R_k$ 的概率密度函数 $f_{R_k}(x)$ 。
+对于 $0$ 时刻的初始状态量随机变量 $X_0$ ，认为观测值 $y_0$ 即为其真值，其后验概率密度函数即为其先验概率密度函数。我们可以根据经验知识（建模精度和传感器精度）写出 $0$ 时刻的初始状态量随机变量 $X_0$ 的后验概率密度函数 $f^+_{X_0}(x)$ 、 $k$ 时刻过程噪声随机变量 $Q_k$ 的概率密度函数 $f_{Q_k}(x)$ 和 $k$ 时刻观测噪声随机变量 $R_k$ 的概率密度函数 $f_{R_k}(x)$ 。
 
 - 符号定义
 
@@ -600,12 +600,13 @@ $$
 
 ### 预测推导
 
-已知 $0$ 时刻状态量随机变量 $X_0$ 的后验概率密度函数 $f^+_{X_0}(x)$ ，状态转移函数 $f(x)$， $1$ 时刻过程噪声随机变量 $Q_1$ 的概率密度函数 $f^−_{Q_1}(x)$ ，求解 $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数 $f^−_{X_1}(x)$ 。
+已知 $0$ 时刻状态量随机变量 $X_0$ 的后验概率密度函数 $ f^+_{X_0}(x) $ ，状态转移函数 $ f(x) $， $1$ 时刻过程噪声随机变量 $Q_1$ 的概率密度函数 $f^−_{Q_1}(x)$ ，求解 $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数 $f^−_{X_1}(x)$ 。
 
 类似二维连续型随机变量贝叶斯公式的推导过程，我们从求解 $X_1$ 的先验累积分布函数 $F^−_{X_1}$ 入手。
 
 $$
-\begin {aligned}
+
+\begin{aligned}
     F_{X_1}^-(x) & = P(X_1 \le x) \\
     & = \sum_{u=-\infty}^xP(X_1=u) \quad \Rightarrow \color{red}{化连续为离散无穷小的累加} \\
     & = \sum_{u=-\infty}^x\sum_{v=-\infty}^{+\infty}P(X_1=u \ | \ X_0=v)P(X_0=v) \quad \Rightarrow \color{red}{全概率公式} \\
@@ -616,7 +617,8 @@ $$
     & = \sum_{u=-\infty}^x\left\{\lim_{\epsilon \to 0}\int_{-\infty}^{+\infty}f_{Q_1}[u-f(v)]f_{X_0}^+(v)\mathrm{d}v·\epsilon \right\} \quad \Rightarrow \color{red}{积分定义} \\
     & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[u-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}u \quad \Rightarrow \color{red}{积分定义} \\
     & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[x-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}x \quad \Rightarrow \color{red}{替换自变量符号u为x}
-\end {aligned}
+\end{aligned}
+
 $$
 
 故， $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数为：
@@ -655,7 +657,10 @@ $$
 
 其中，归一化常数 $\eta_1$ 为：
 
-$$\eta_1=\left[\int_{-\infty}^{+\infty}f_{Y_1|X_1}(y_1 \ | \ x)f_{X_1}^-(x)\mathrm{d}x\right]^{-1}=\left\{\int_{-\infty}^{+\infty}f_{R_1}[y_1-h(x)]f_{X_1}^-(x)\mathrm{d}x\right\}^{-1}$$
+$$
+\eta_1=\left[\int_{-\infty}^{+\infty}f_{Y_1|X_1}(y_1 \ | \ x)f_{X_1}^-(x)\mathrm{d}x\right]^{-1}=\left\{\int_{-\infty}^{+\infty}f_{R_1}[y_1-h(x)]f_{X_1}^-(x)\mathrm{d}x\right\}^{-1}
+$$
+
 
 ### 递推流程
 
@@ -704,13 +709,17 @@ $$f_{X_k}^+(x)=\eta_k·f_{R_k}[y_k-h(x)]·f_{X_k}^-(x)$$
 
 归一化常数 $η_k$：
 
-$$\eta_k=\left\{\int_{-\infty}^{+\infty}f_{R_k}[y_k-h(x)]f_{X_k}^-(x)\mathrm{d}x\right\}^{-1}$$
+$$
+\eta_k=\left\{\int_{-\infty}^{+\infty}f_{R_k}[y_k-h(x)]f_{X_k}^-(x)\mathrm{d}x\right\}^{-1}
+$$
 
 - 4 求解最优估计
 
 $k$ 时刻状态量随机变量 $X_k$ 的后验估计：
 
-$$\hat{x}_k^+=E[f_{X_k}^+(x)]=\int_{-\infty}^{+\infty}xf_{X_k}^+(x)\mathrm{d}x$$
+$$
+\hat{x}_k^+=E[f_{X_k}^+(x)]=\int_{-\infty}^{+\infty}xf_{X_k}^+(x)\mathrm{d}x
+$$
 
 ## 贝叶斯滤波的缺点以及解决方法
 
