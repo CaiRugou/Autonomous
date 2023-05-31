@@ -717,7 +717,7 @@ $$
 $k$ 时刻状态量随机变量 $X_k$ 的后验估计：
 
 $$
-\hat{x}_k^+=E[f_{X_k}^+(x)]=\int_{-\infty}^{+\infty}xf_{X_k}^+(x)dx
+\hat x_k^+ = E[f_{X_k}^+(x)] = \int _{-\infty} ^ {+\infty} xf_{X_k} ^ + (x)dx
 $$
 
 ## 贝叶斯滤波的缺点以及解决方法
