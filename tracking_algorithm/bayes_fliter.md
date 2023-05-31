@@ -683,9 +683,9 @@ $$
 
 最终，可得到 $k$ 时刻状态量随机变量 $X_k$ 的最优估计 $\hat{x}_k$：
 
-$$
+```math
 \hat{x}_k=E[f_{X_k}^+(x)]=\int_{-\infty}^{+\infty}xf_{X_k}^+(x)\mathrm{d}x
-$$
+```
 
 ## 完整算法框架
 
