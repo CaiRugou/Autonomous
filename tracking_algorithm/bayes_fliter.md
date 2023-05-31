@@ -97,7 +97,9 @@ $$
 则称：
 
 $$
-  f_X(x) = \begin {cases}  p(x)=P(X=x), x\in{x_i}, i=1,2,3,... \\ 0, other \end {cases} 
+  f_X(x) = \begin {cases}  p(x)=P(X=x), x\in{x_i}, i=1,2,3,... \\ 
+
+  0, other \end {cases} 
 $$
 
 为离散型随机变量 $X$ 的概率质量函数Probability Mass Function，PMF）。也可以采用如下的表示方法：
@@ -439,8 +441,308 @@ $$
 P(x=陷阱|y=判无) = {{P(x=陷阱，y=判无)} \over {P(x=陷阱)P(y=判无|x=陷阱) + P(x=陷阱)P(y=判无|x=无陷阱)}}
 $$
 
+$$
+P(x=陷阱，y=判无) = p(y=判无|x=陷阱)p(x=陷阱)
+$$
 
 
-## 参考
+# 贝叶斯滤波
+
+## 贝叶斯公式
+
+对于二维离散型随机变量 $(X,Y)$ , 由其条件概率质量函数与全概率公式，容易得到贝叶斯公式：
+
+$$
+f_{X|Y}(x|y) = {{f_{X,Y}(x,y)} \over {f_Y(y)}} = {{f_{Y|X}((y|x)f_x(x))} \over {\sum_{i=1}^\infty f_{Y|X}(y|x_i)f_X(x_i)}}, (x,y) \in {x_i, y_j},i,j=1,2,3,...
+$$
+
+对于连续型随机变量有类似关系。
+
+## 先验概率、似然概率与后验概率
+
+在二维连续型随机变量的贝叶斯公式中，有如下定义：
+- $f_X(x)$ 被称为**先验概率密度**， 表示根据以往的经验和分析，在本次试验或采样前便可获得随机变量 $X$ 的概率密度；
+- $f_{Y|X}(y|x)$ 被称为**似然概率密度**,表示在状态随机变量 $X$ 取值为 $x$ 的条件下，观测随机变量 $Y$ 取值为 $y$ 的概率密度函数， 状态为因，观测为果，**由因推果** 。
+
+- $f_{X|Y}(x|y)$ 被称为**后验概率密度**， 表示在观察随机变量 $Y$ 取值为 $y$ 的条件下， 状态随机变量 $X$ 取值为 $x$ 的概率密度，状态为因 ，观测为果， **由果推因**。
+
+此外，当 $y$ 为定值时， $\eta = [\int_{-\infty}^{+\infty}f_{Y|X}(y|x)f_X(x)dx]^{-1}$ 为常数， 被称为贝叶斯公式的**归一化常数**。
+
+因此，二维连续型随机变量的贝叶斯公式可表示为：
+
+$$
+后验概率密度 = \eta \times 似然概率密度 \times 先验概率密度
+$$
+
+## 似然概率
+
+上文中提到，似然概率密度函数 $f_Y|X(y | x)$ 表示在状态随机变量 $X$ 取值为 $x$ 的条件下，观测随机变量 $Y$ 取值为 $y$ 的概率密度。似然概率密度函数表征了传感器检测精度，对于给定的状态条件 $X=x$ ，观测结果 $Y=y$ 的概率分布通常有三种模型：
+
+(1)  等可能型
+
+观测值在状态量真值附近呈均匀分布，此时的似然概率密度函数为常数。
+
+(2) 阶梯型
+
+观测值在状态量真值附近呈阶梯分布，此时的似然概率密度函数为分段常数
+
+(3) 正态分布型
+
+观测值在状态量真值附近呈高斯分布，此时的似然概率密度函数为高斯函数：
+
+$$
+f_{Y|X}(y|x) = {1 \over {\sigma \sqrt{2\pi}}} e^{-{{y-x}^2\over {2\sigma ^2}}}
+$$
+
+若假定似然概率密度函数为高斯函数，此时，似然概率密度函数的均值 $x$ 代表状态量真值，$\sigma$ 代表传感器检测精度范围。若同时假定先验概率密度函数为高斯函数，即：
+
+$$
+f_X(x) \sim \mathcal{N}(\mu_1, \ \sigma_1^2), \quad f_{Y|X}(y \ | \ x) \sim \mathcal{N}(\mu_2, \ \sigma_2^2)
+$$
+
+则
+
+$$
+f_{X|Y}(x \ | \ y) \sim \mathcal{N}(\frac{\sigma_2^2}{\sigma_1^2 + \sigma_2^2}\mu_1+\frac{\sigma_1^2}{\sigma_1^2 + \sigma_2^2}\mu_2, \ \frac{\sigma_1^2\sigma_2^2}{\sigma_1^2+\sigma_2^2})
+$$
+
+## 贝叶斯滤波推导
+
+### 问题建模
+
+- 对于某状态量随机变量 $X$ ，从初始时刻 $0$ 开始，对其进行观测，得到 $0 \~~ k$ 时刻的观测值：
+
+$$y_0,y_1,y_2,⋯,y_k$$
+
+求解 $k$ 时刻状态量随机变量 $X_k$
+的最优估计 $\hat{x}_k$ 。
+
+- 求解思路
+
+以贝叶斯公式为求解方向，将问题转化为求解状态量随机变量 $X_k$ 后验概率密度函数的期望：
+
+$$
+\hat{x}_k=E[f_{X_k}^+(x)]
+$$
+
+进而需要求解状态量随机变量 $X_k$ 的先验概率密度函数与似然概率密度函数。我们认为，$k$ 时刻的状态量随机变量 $X_k$ 与且仅与上一时刻的状态量随机变量 $X_{k−1}$ 有关，$k$ 时刻的观测量随机变量 $Y_k$ 与且仅与 $k$ 时刻的状态量随机变量 $X_k$ 有关，其中的数量关系我们分别称之为状态方程与观测方程：
+
+$$
+\begin{cases}
+    X_k=f(X_{k-1})+Q_k \quad \Rightarrow \color{red}{状态方程} \\
+
+    Y_k=h(X_k)+R_k \quad \Rightarrow \color{red}{观测方程}
+\end{cases}
+$$
+
+$f(x)$ 被称为状态转移函数，$h(x)$ 被称为观测函数。
+
+对于 $0$ 时刻的初始状态量随机变量 $X_0$ ，认为观测值 $y_0$ 即为其真值，其后验概率密度函数即为其先验概率密度函数。我们可以根据经验知识（建模精度和传感器精度）写出 $0$ 时刻的初始状态量随机变量 $X_0$ 的后验概率密度函数 $f^+_{X_0}(x)、k$ 时刻过程噪声随机变量 $Q_k$ 的概率密度函数 $f_{Q_k}(x)$ 和 $k$ 时刻观测噪声随机变量 $R_k$ 的概率密度函数 $f_{R_k}(x)$ 。
+
+- 符号定义
+
+各时刻的状态量随机变量
+
+$$X_0, X_1, X_2, \cdots , X_k $$
+
+各时刻的观测量随机变量
+
+$$Y_0, Y_1, Y_2, \cdots , Y_k $$
+
+各时刻的观测值
+
+$$ y_0, y_1, y_2, \cdots , y_k $$
+
+各时刻的过程噪声随机变量
+
+$$ Q_1, Q_2, \cdots , Q_k $$
+
+各时刻的观测噪声随机变量
+
+$$ R_1, R_2, \cdots , R_k $$
+
+各时刻的过程噪声随机变量概率密度函数
+
+$$ f_{Q_1}(x), f_{Q_2}(x), \cdots , f_{Q_k}(x) $$
+
+各时刻的观测噪声随机变量概率密度函数
+
+$$ f_{R_1}(x), f_{R_2}(x), \cdots , f_{R_k}(x) $$
+
+各时刻的状态量随机变量先验概率密度函数
+
+$$f_{X_0}^-(x), f_{X_1}^-(x), f_{X_2}^-(x), \cdots , f_{X_k}^-(x)$$
+
+各时刻的状态量随机变量后验概率密度函数
+
+$$f_{X_0}^+(x), f_{X_1}^+(x), f_{X_2}^+(x), \cdots , f_{X_k}^+(x)$$
+
+各时刻状态量随机变量与观测量随机变量的似然概率密度函数
+
+$$f_{Y_1|X_1}(y_1 \ | \ x), f_{Y_2|X_2}(y_2 \ | \ x), \cdots , f_{Y_k|X_k}(y_k \ | \ x)$$
+
+- 重要假设
+
+$X_0$ 分别与 $Q_1,Q_2,⋯,Q_k$
+相互独立；
+
+$X_0$ 分别与 $R_1,R_2,⋯,R_k$ 相互独立；
+
+$X_{k−1}$ 与 $Q_k$ 相互独立；
+
+$X_k$ 与 $R_k$ 相互独立。
+
+- 重要定理
+
+**条件概率里的条件可以作逻辑推导**。例如
+
+$$
+P(X=1 \ | \ Y=2,Z=3)=P(X+Y=3 \ | \ Y=2,Z=3)=P(X+Y=3 \ | \ Y=2,Z-Y=1)
+$$
+
+### 预测推导
+
+已知 $0$ 时刻状态量随机变量 $X_0$ 的后验概率密度函数 $f^+_{X_0}(x)$ ，状态转移函数 $f(x)$，$1$ 时刻过程噪声随机变量 $Q_1$ 的概率密度函数 $f_{Q_1}(x)$，求解 $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数 $f^−_{X_1}(x)$ 。
+
+类似二维连续型随机变量贝叶斯公式的推导过程，我们从求解 $X_1$ 的先验累积分布函数 $F^−_{X_1}$ 入手。
+
+$$
+\begin{aligned}
+    F_{X_1}^-(x) & = P(X_1 \le x) \\
+    & = \sum_{u=-\infty}^xP(X_1=u) \quad \Rightarrow \color{red}{化连续为离散无穷小的累加} \\
+    & = \sum_{u=-\infty}^x\sum_{v=-\infty}^{+\infty}P(X_1=u \ | \ X_0=v)P(X_0=v) \quad \Rightarrow \color{red}{全概率公式} \\
+    & = \sum_{u=-\infty}^x\sum_{v=-\infty}^{+\infty}P[X_1-f(X_0)=u-f(v) \ | \ X_0=v]P(X_0=v) \quad \Rightarrow \color{red}{条件概率里的条件可以作逻辑推导} \\
+    & = \sum_{u=-\infty}^x\sum_{v=-\infty}^{+\infty}P[Q_1=u-f(v) \ | \ X_0=v]P(X_0=v) \quad \Rightarrow \color{red}{状态方程} \\
+    & = \sum_{u=-\infty}^x\sum_{v=-\infty}^{+\infty}P[Q_1=u-f(v)]P(X_0=v) \quad \Rightarrow \color{red}{X_{k-1}与Q_k相互独立} \\
+    & = \sum_{u=-\infty}^x\left\{\lim_{\epsilon \to 0}\sum_{v=-\infty}^{+\infty}f_{Q_1}[u-f(v)]·\epsilon · f_{X_0}^+(v)·\epsilon \right\} \quad \Rightarrow \color{red}{类似二维连续型随机变量贝叶斯公式的推导过程，将点概率化为概率密度与无穷小的乘积} \\
+    & = \sum_{u=-\infty}^x\left\{\lim_{\epsilon \to 0}\int_{-\infty}^{+\infty}f_{Q_1}[u-f(v)]f_{X_0}^+(v)\mathrm{d}v·\epsilon \right\} \quad \Rightarrow \color{red}{积分定义} \\
+    & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[u-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}u \quad \Rightarrow \color{red}{积分定义} \\
+    & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[x-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}x \quad \Rightarrow \color{red}{替换自变量符号u为x}
+\end{aligned}
+$$
+
+故， $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数为：
+
+$$
+f_{X_1}^-(x)=\frac{\mathrm{d}F_{X_1}^-(x)}{\mathrm{d}x}=\int_{-\infty}^{+\infty}f_{Q_1}[x-f(v)]f_{X_0}^+(v)\mathrm{d}v
+$$
+
+推导完毕。可以发现，先验概率密度函数本质来源于状态方程。
+
+### 更新推导
+
+已知 $1$ 时刻观测量随机变量 $Y_1$ 的取值 $y_1$，求解 $1$ 时刻状态量随机变量与观测量随机变量的似然概率密度函数 $f_{Y_1|X_1}(y_1 \ | \ x)$，并联合预测步得到的 $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数 $f_{X_1}^-(x)$，求解 $1$ 时刻状态量随机变量 $X_1$ 的后验概率密度函数 $f_{X_1}^+(x)$ 。
+
+首先，求解似然概率密度函数 $f_{Y_1|X_1}(y_1 \ | \ x)$：
+
+$$
+\begin{aligned}
+    f_{Y_1|X_1}(y_1 \ | \ x) & =\lim_{\epsilon \to 0}\frac{F_{Y_1 | X_1}(y_1+\epsilon \ | \ x)-F_{Y_1 | X_1}(y_1 \ | \ x)}{\epsilon} \quad \Rightarrow \color{red}{导数的定义} \\
+    & =\lim_{\epsilon \to 0}\frac{P(y_1 \le Y_1 \le y_1 + \epsilon \ | \ X_1=x)}{\epsilon} \quad \Rightarrow \color{red}{累积分布函数的性质} \\
+    & =\lim_{\epsilon \to 0}\frac{P[y_1-h(x) \le Y_1-h(X_1) \le y_1 - h(x) + \epsilon \ | \ X_1=x]}{\epsilon} \quad \Rightarrow \color{red}{条件概率里的条件可以作逻辑推导} \\
+    & =\lim_{\epsilon \to 0}\frac{P[y_1-h(x) \le R_1 \le y_1 - h(x) + \epsilon \ | \ X_1=x]}{\epsilon} \quad \Rightarrow \color{red}{观测方程} \\
+    & =\lim_{\epsilon \to 0}\frac{P[y_1-h(x) \le R_1 \le y_1 - h(x) + \epsilon]}{\epsilon} \quad \Rightarrow \color{red}{X_{k}与R_k相互独立} \\
+    & =\lim_{\epsilon \to 0}\frac{F_{R_1}[y_1 - h(x) + \epsilon]-F_{R_1}[y_1 - h(x)]}{\epsilon} \quad \Rightarrow \color{red}{累积分布函数的性质} \\
+    & =f_{R_1}[y_1-h(x)] \quad \Rightarrow \color{red}{导数的定义}
+\end{aligned}
+$$
+
+可以发现，似然概率密度函数本质来源于观测方程。
+
+然后，联合预测步得到的 $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数 $f_{X_1}^-(x)$，求解 1 时刻状态量随机变量 $X_1$ 的后验概率密度函数 $f_{X_1}^+(x)$：
+
+$$
+f_{X_1}^+(x)=\eta_1·f_{Y_1|X_1}(y_1 \ | \ x)·f_{X_1}^-(x)=\eta_1·f_{R_1}[y_1-h(x)]·f_{X_1}^-(x)
+$$
+
+其中，归一化常数 $\eta_1$ 为：
+
+$$\eta_1=\left[\int_{-\infty}^{+\infty}f_{Y_1|X_1}(y_1 \ | \ x)f_{X_1}^-(x)\mathrm{d}x\right]^{-1}=\left\{\int_{-\infty}^{+\infty}f_{R_1}[y_1-h(x)]f_{X_1}^-(x)\mathrm{d}x\right\}^{-1}$$
+
+### 递推流程
+
+由预测步和更新步的推导结果，可得到由 $0$ 时刻状态量随机变量 $X_0$ 的后验概率密度函数 $f_{X_0}^+(x)$ 到 $k$ 时刻状态量随机变量 $X_k$ 的后验概率密度函数 $f_{X_0}^+(x)$ 的递推流程：
+
+$$
+\begin{aligned}
+    f_{X_0}^+(x) & \stackrel{预测}{\Longrightarrow} f_{X_1}^-(x)=\int_{-\infty}^{+\infty}f_{Q_1}[x-f(v)]f_{X_0}^+(v)\mathrm{d}v \stackrel{观测更新}{\Longrightarrow} f_{X_1}^+(x)=\eta_1·f_{R_1}[y_1-h(x)]·f_{X_1}^-(x) \\
+    & \stackrel{预测}{\Longrightarrow} f_{X_2}^-(x)=\int_{-\infty}^{+\infty}f_{Q_2}[x-f(v)]f_{X_1}^+(v)\mathrm{d}v \stackrel{观测更新}{\Longrightarrow} f_{X_2}^+(x)=\eta_2·f_{R_2}[y_2-h(x)]·f_{X_2}^-(x) \\
+    & \cdots \\
+    & \stackrel{预测}{\Longrightarrow} f_{X_k}^-(x)=\int_{-\infty}^{+\infty}f_{Q_k}[x-f(v)]f_{X_{k-1}}^+(v)\mathrm{d}v \stackrel{观测更新}{\Longrightarrow} f_{X_k}^+(x)=\eta_k·f_{R_k}[y_k-h(x)]·f_{X_k}^-(x)
+\end{aligned}
+$$
+
+其中，归一化常数 $\eta_1$ 为：
+
+$$
+\eta_k=\left\{\int_{-\infty}^{+\infty}f_{R_k}[y_k-h(x)]f_{X_k}^-(x)\mathrm{d}x\right\}^{-1}
+$$
+
+最终，可得到 $k$ 时刻状态量随机变量 $X_k$ 的最优估计 $\hat{x}_k$：
+
+$$
+\hat{x}_k=E[f_{X_k}^+(x)]=\int_{-\infty}^{+\infty}xf_{X_k}^+(x)\mathrm{d}x
+$$
+
+## 完整算法框架
+
+- 1 设初值
+
+初始 $0$ 时刻状态量随机变量 $X_0$ 的后验概率密度函数：
+
+$$f_{X_0}^+(x)$$
+
+- 2 预测
+
+$k$ 时刻状态量随机变量 $X_k$ 的先验概率密度函数：
+
+$$f_{X_k}^-(x)=\int_{-\infty}^{+\infty}f_{Q_k}[x-f(v)]f_{X_{k-1}}^+(v)\mathrm{d}v$$
+
+- 3 更新
+
+$k$ 时刻状态量随机变量 $X_k$ 的后验概率密度函数：
+
+$$f_{X_k}^+(x)=\eta_k·f_{R_k}[y_k-h(x)]·f_{X_k}^-(x)$$
+
+归一化常数 $η_k$：
+
+$$\eta_k=\left\{\int_{-\infty}^{+\infty}f_{R_k}[y_k-h(x)]f_{X_k}^-(x)\mathrm{d}x\right\}^{-1}$$
+
+- 4 求解最优估计
+
+$k$ 时刻状态量随机变量 $X_k$ 的后验估计：
+
+$$\hat{x}_k^+=E[f_{X_k}^+(x)]=\int_{-\infty}^{+\infty}xf_{X_k}^+(x)\mathrm{d}x$$
+
+## 贝叶斯滤波的缺点以及解决方法
+
+- 缺点
+
+从上文的推导及结论中可以发现，求解预测步中的先验概率密度函数 $f_{X_k}^-(x)$、更新步中的归一化常数 $η_k$、最终的最优估计 $\hat{x}_k$ 时均涉及到无穷积分，而大多数情况无法得到解析解，使得贝叶斯滤波算法的直接应用十分困难。
+
+- 解决方法
+
+为了解决贝叶斯滤波中的无穷积分问题，通常从两个角度出发：
+
+1. 作理想假设
+
+- 假设状态转移函数 $f(x)$ 和观测函数 $h(x)$ 均为线性函数，过程噪声随机变量 $Q_k$ 和 观测噪声随机变量 $R_k$ 均服从均值为 $0$ 的正态分布——卡尔曼滤波（Kalman Filter）
+- 假设状态转移函数 $f(x)$ 和（或）观测函数 $h(x)$ 为非线性函数，过程噪声随机变量 $Qk$ 和 观测噪声随机变量 $Rk$ 均服从均值为 $0$ 的正态分布——扩展卡尔曼滤波（Extended Kalman Filter）和无迹卡尔曼滤波（Unscented Kalman Filter）
+
+2.  化连续为离散
+
+将无穷积分转化为数值积分，一般有以下方法：
+
+    高斯积分（不常用）
+    蒙特卡罗积分（粒子滤波，Particle Filter）
+    直方图滤波
+
+针对本节内容中提到的卡尔曼滤波、扩展卡尔曼滤波、无迹卡尔曼滤波、粒子滤波、直方图滤波等常用滤波算法，将在后续文章中进行详细展开讨论。
+
+
+# 参考
 
 [从概率到贝叶斯滤波](https://blog.shipengx.com/archives/9fb25cec.html)
+
+
+[MarkDown数学公式](https://zhuanlan.zhihu.com/p/441454622)
