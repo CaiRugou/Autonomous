@@ -297,11 +297,11 @@ $$
 对于离散随机变量，可以获得<font color="#660000">边缘概率质量函数</font>(marginal pmf):
 
 $$
-p(x) = \sum_{all y} p(x,y)
+p(x) = \sum_{all \  y} p(x,y)
 $$
 
 $$
-p(y) = \sum_{all x} p(x,y)
+p(y) = \sum_{all \ x} p(x,y)
 $$
 
 在求解 $x$ 的单一边缘分布时，则累加相同 $x$ 值、不同 $y$ 值时的多个联合概率，从而获得该 $x$ 值的总体概率，即**边缘概率**。
