@@ -604,7 +604,8 @@ $$
 
 类似二维连续型随机变量贝叶斯公式的推导过程，我们从求解 $X_1$ 的先验累积分布函数 $F^−_{X_1}$ 入手。
 
-$$
+```math
+
 \begin{aligned}
     F_{X_1}^-(x) & = P(X_1 \leq x) \\
     & = \sum_{u=-\infty}^x P(X_1=u) \quad \Rightarrow \color{red}{化连续为离散无穷小的累加} \\
@@ -618,7 +619,7 @@ $$
     & = \int_{-\infty}^x \int_{-\infty}^{+\infty}f_{Q_1}[x-f(v)]f_{X_0}^+(v)\mathrm{d}v\mathrm{d}x \quad \Rightarrow \color{red}{替换自变量符号u为x} \\
 \end{aligned}
 
-$$
+```
 
 故， $1$ 时刻状态量随机变量 $X_1$ 的先验概率密度函数为：
 
