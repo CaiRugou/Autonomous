@@ -49,7 +49,7 @@ $$
 
 高斯分布的中心 $\mu$ 就是图中的 $\hat x_k$ :
 
-$$
+```math
 \hat x_k = 
 \left [  \begin {array}{}
 
@@ -58,11 +58,11 @@ position \\
 velocity
 
 \end {array} \right]
-$$
+```
 
 对于方差 $\sigma ^2$ 也就是图中的椭圆的范围， 因为我们有两个变量，所以可以用一个协方差矩阵来表示。
 
-$$
+```math
 P_k = 
 \left [ \begin {array} {}
 
@@ -71,7 +71,7 @@ P_k =
 \sum_{vp} & \sum_{vv}
 
 \end {array} \right]
-$$
+```
 
 所以机器人的真是状态可能就位于上图椭圆的范围内，位于圆心的概率最大。
 
@@ -91,7 +91,7 @@ $$
 
 写成矩阵形式：
 
-$$
+```math
 \hat x_k = 
 
 \left  [ \begin {array} {}
@@ -103,7 +103,7 @@ $$
 \end {array} \right ] \hat x_{k-1}
 
 = F_k \hat x_{k-1}
-$$
+```
 
 此处的 $F_k$ 就是状态转移矩阵，该矩阵为常量矩阵，通过计算后，得到的**结果仍然满足高斯分布**。
 
@@ -124,14 +124,17 @@ $$
 
 为了能够让机器人到达任何地方，毫无疑问我们需要对它进行控制，比如加速减速，假设某个时刻我们给机器人施加一个加速度 $a$ , 那么下一个时刻的位置和速度则应该为
 
-$$
-p_k = p_{k-1} + \Delta t  \ v_{k-1} + {1 \over 2}a \Delta t^2 \\
+```math
+p_k = p_{k-1} + \Delta t  \ v_{k-1} + {1 \over 2}a \Delta t^2 
+```
+
+```math
 v_k =  \ v_{k-1} + a \Delta t
-$$
+```
 
 因此我们的状态预测方程更新为：
 
-$$
+```math
 \hat x_k = F_k \hat x_{k-1} + 
 \left  [ \begin {array}{}
 {\Delta t^2} \over 2 \\
@@ -141,7 +144,7 @@ $$
 \end {array} \right] a \\
 
 = F_k \hat x_{k-1} + B_ku_k
-$$
+```
 
 在新的方程中 $B_k$ 称为**状态控制矩阵**， $u_k$ 称为**状态控制向量**， 含义很明显，前者表明的是加速和减速如何改变机器人的状态，后者是表示控制力度和方向。
 
@@ -152,8 +155,9 @@ $$
 ```math
 
 \hat x_k = F_k \hat x_{k-1} + B_ku_k + 0 \\
+```
 
-
+```math
 P_k = F_kP_{k-1}F^T_k + Q_k
 
 ```
