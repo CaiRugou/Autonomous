@@ -153,6 +153,7 @@ $$
 
 \hat x_k = F_k \hat x_{k-1} + B_ku_k + 0 \\
 
+
 P_k = F_kP_{k-1}F^T_k + Q_k
 
 ```
