@@ -316,8 +316,34 @@ x_k = (F x_{k-1}) + (B*u)
 $$
 
 $$
-P= (FP_{k-1}F^T) + Q
+P_k= (FP_{k-1}F^T) + Q
 $$
 
 - 更新阶段
 
+$$
+y = z_k - (Hx_k)
+$$
+
+$$
+S = (H*P_kH^T) + R
+$$
+
+$$
+K = P_kH^TS^{-1}
+$$
+
+$$
+\hat x^` = x + (K y)
+$$
+
+$$
+\hat P^` = (I -(K*H))*P
+$$
+
+上述的公式：
+ $y$ 是测量余量， $S$ 是测量余量协方差， $K$ 是预测量卡尔曼增益， $\hat x^`$ 系统预测最优估计值， $\hat P^`$ 是系统预测最优估计的协方差， $Q$ 是外部影响的协方差， $R$ 是传感器测量误差， 实际应用中通过调整两者的值来达到模型的最优。
+
+ ## 卡尔曼算法模型流程
+
+ ![image](https://github.com/CaiRugou/Autonomous/blob/main/img/process.png)
