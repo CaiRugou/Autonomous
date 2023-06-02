@@ -204,4 +204,93 @@ $$
 
 ## 两个高斯密度概率函数的乘积
 
+$$
+f(x) = {1\over {\sqrt{2\pi} \delta_f}} e^{-({{x-u_f})^2}\over {2\delta_f^2}}
+$$
+
+$$
+g(x) = {1\over {\sqrt{2\pi} \delta_g}} e^{-({{x-u_g})^2}\over {2\delta_g^2}}
+$$
+
+$$
+f(x)g(x) = {1\over {{2\pi} \delta_f \delta_g}} e^{-({{x-u_{fg}})^2}\over {2\delta_{fg}^2}} e^{-({{u_f-u_{g}})^2}\over {2(\delta_{f}^2 + \delta_g)^2}}
+$$
+
+$$
+= {1\over {\sqrt{2\pi} \delta_f \delta_g}} e^{-({{x-u_{fg}})^2}\over {2\delta_{fg}^2}} {1\over {\sqrt{2\pi (\delta_f^2 +\delta_g^2})}} e^{-{{(u_f - u_g)^2}\over {2(\delta_f^2 + \delta_g^2)}}}
+$$
+
+对比标准高斯分布概率密度函数，相乘的结果是**一个乘了特定系数的高斯概率密度函数**，并且可以求解得到这个新的高斯分布的均值和方差分别为：
+
+$$
+u^` = u_0 + {{\delta_0^2(u_1 - u_0)} \over {\delta_0^2 + \delta_1^2}}
+$$
+
+$$
+\delta^{`2} = \delta_0^2 - {{\delta_0^4} \over {\delta_0^2 + \delta_1^2}}
+$$
+
+## 新的高斯分布
+
+我们关注这个乘积中新的高斯概率密度函数，其实就是描述了一个新的高斯分布，这正是卡尔曼滤波想要的**最优估计**。
+
+$$
+{\color{red}k} = {{\delta_0^2} \over {\delta_0^2 + \delta_1^2}}
+$$
+
+代入到上文中的高斯分布的均值和方差中，得到：
+
+$$
+u^` = u_0 + {\color{red}k}(u_1 - u_0)
+$$
+
+$$
+\delta^{`2} = \delta_0^2 - {\color{red}k}\delta_0^2
+$$
+
+将上述公式写成矩阵形式：
+
+$$
+{\color{red}K} = \sum_0(\sum_0 + \sum_1)^{-1}
+$$
+
+这里除以某矩阵就相当于乘以该矩阵的逆。
+
+$$
+\vec u^` = \vec u_0 + {\color{red}K}(\vec u_1 - \vec u_0)
+$$
+
+$$
+\sum` = \sum_0 - {\color{red}K}\sum_0
+$$
+
+前面我们已经得到了预测结果和观测结果服从两个高斯分布，如下：
+
+$$
+(\vec u_0, \sum_0) = (H_k \hat x _k, H_kP_kH_k^T)
+$$
+
+$$
+(\vec u_1, \sum_1) = (z_k, R_k)
+$$
+
+为了得到卡尔曼滤波对** *当前状态*的最优估计**的计算方程：
+
+$$
+{\color{red}K} = H_kP_kH_k^T(H_kP_kH_k^T  + R_k) ^ {-1}
+$$
+
+$$
+H_k \hat {x^`}_k  =  H_k\hat x_k + {\color{red}K}(z_k - H_k\vec x_k)
+$$
+
+$$
+H_kP^`_kH^T_k = H_kP_kH^T_k - {\color{red}K}H_kP_kH^T_k
+$$
+
+上式中都是在观测单位下的计算，我们需要进行下一状态估计计算需要将观测量转为**预测状态量**， 通过左乘 $H$ 矩阵：
+
+
+
+
 
