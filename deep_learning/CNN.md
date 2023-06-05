@@ -143,6 +143,10 @@ LeNet-5网络的结构：（参考上图）
 
 但是，这种**全连接关系不是必须的**。可以让本层的每个特征图都仅依赖上一层少数几个特征图，以简化结构，减少计算量。为此，LeNet-5定义了一个连接表，指定了本层特征图和上一层特征图之间的连接关系。
 
+**全连接举例**，如下图是全连接的例子：
+
+![image](https://github.com/CaiRugou/Autonomous/blob/main/img/cnn_example.png)
+
 LeNet-5设计的连接表，给出了本层（C3）的16个特征图与上一层S2的6个特征图的连接方法，见下图：
 
 ![image](https://github.com/CaiRugou/Autonomous/blob/main/img/lenet_connect.png)
