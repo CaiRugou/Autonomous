@@ -212,9 +212,11 @@ LeNet模型总共包含大约 $6$ 万个参数。
 
 有研究者指出，当时Yann LeCun提出的LeNet-5模型，池化层使用的是average pool，而且各层激活函数一般是Sigmoid和tanh。实际上，可以根据需要，做出改进，使用max pool和激活函数ReLU，效果会更理想。
 
-#### 参考
+### 参考
 
 [卷积神经网络](https://mp.weixin.qq.com/s/eOM3YHPkCCmMpLrv4ZDhBA)
 
 
 [卷积神经网络入门--案例 LeNet-5](https://zhuanlan.zhihu.com/p/579996909)
+
+[卷积神经网络分类](https://blog.csdn.net/qq_32790593/article/details/103528976)
