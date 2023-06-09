@@ -82,7 +82,7 @@ A =
 
 ## 恒定转率和速度模型(CTRV) 和 恒定转率和加速度(CTRA)
 
- ![image](https://github.com/CaiRugou/Autonomous/blob/main/img/img/ctrv.jpg) 
+ ![image](https://github.com/CaiRugou/Autonomous/blob/main/img/ctrv.jpg) 
 
  状态量：
 
@@ -94,7 +94,7 @@ $\theta$ 是航向角-追踪目标和本车坐标系的 $x$ 轴的夹角， $\om
 
 状态方程：
 
-$$
+```math
 X_{k+1} = X_k + \int ^{t_{k+1}}_{t_k}
 
 \left [ \begin{array} {}
@@ -126,13 +126,13 @@ v_k \\
 
 \end{array} \right]
 
-$$
+```
 
 结合过程噪声，完整的状态方程：其中包含径向方向的速度 $v$ 的加速度 $a_{v,k}$, 偏航角加速度 $\omega$ 的加速度 $a_{\omega ,k}$ 。
 
 得到状态转移函数 $g(x(t),u)$ :
 
-![image](https://github.com/CaiRugou/Autonomous/blob/main/img/img/ctrv_g.jpg) 
+![image](https://github.com/CaiRugou/Autonomous/blob/main/img/ctrv_g.jpg) 
 
 对于非线性关系的模型，可以使用 扩展卡尔曼和无损卡尔曼。
 
@@ -160,9 +160,9 @@ $$
 \hat x_{j0,k-1} = \sum _{i=1}^n \lambda _{ij,k-1} \hat x _{i,k-1}
 $$
 
-$$
+```math
 \hat P_{j0,k-1} = \sum _{i=1}^n \lambda _{ij,k-1} [\hat P_{i,k-1} + (\hat x_{j,0,k-1} - \hat x_{i,k-1})(\hat x_{j,0,k-1} - \hat x_{i,k-1})^T]
-$$
+```
 
 其中 $\lambda _{ij,k-1}$ 为**融合的相关性系数**。是通过预先设定的模型转移概率矩阵 $P$ ，第 $i$ 行表示所有模型（包含本身）与 第 $i$ 个模型的关系，
 
@@ -172,15 +172,15 @@ $$
 后，再进行归一化处理得到 $\lambda _{ij,k-1}$
 ：
 
-$$
+```math
 \lambda _{ij,k-1} = {{p_{ij}u_{i,k-1}} \over {\sum_{i=1}^n p_{ij}u_{i,k-1}}}
-$$
+```
 
 例如：
 
 有模型 $CV, CA, CTRV$ , 三个模型，模型转移矩阵 $P$ 如下：
 
-$$
+```math
 P_{ij} =
 \left [ \begin{array} {}
 
@@ -189,7 +189,7 @@ P_{ij} =
 0.05 & 0.05 & 0.9 \\
 
 \end{array} \right]
-$$
+```
 
 每个模型的正确性概率
 
@@ -232,20 +232,20 @@ $=0.9*0.8 + 0.05*0.1 + 0.05*0.1$
 
 - 最终得到模型 $j=1$ 的混合状态估计为：
   
-  $$
+ ```math
   \hat X_{0j=1} = \hat X_1 u_{11} + \hat X_2u_{21} + \hat X_3u_{31}
-  $$
+```
 
 - 最终得到模型 $j=1$ 的混合协方差估计为：
 
-$$
+```math
 P_{0j=1} = 
 (u_{11}[P_1 + (\hat x_{0j}-\hat x_{1})(\hat x_{0j} - \hat x_1)^T]) +
 
  (u_{21}[P_2 + (\hat x_{0j}-\hat x_{2})(\hat x_{0j} - \hat x_2)^T]) +
 
  (u_{31}[P_3 + (\hat x_{0j}-\hat x_{3})(\hat x_{0j} - \hat x_3)^T])
-$$
+```
 
 
 ### 使用相关卡尔曼滤波算法预测更新
@@ -263,9 +263,9 @@ $S_{i,k} = H_{i,k}\hat P_{i0,k}H_{i,k}^T + R_{i,k}$
 
 当每个模型都估计出目标状态口，根据估计出的状态来评价模型对当前状态估计的好坏，如下：
 
-$$
+```math
 \Lambda _{i,k} = {1 \over {\sqrt{(2\pi)^N |S_{i,k}|}}}e^{-{1\over 2} y_i^TS_{i,k}^{-1}y_{i,k}}
-$$
+```
 
 ### 更新每个模型的可信度（准确率）
 
@@ -294,9 +294,9 @@ $$
 \hat x_k = \sum _{i=1} ^n u_{i,k}\hat x_{i,k}
 $$
 
-$$
+```math
 \hat P_k = \sum _{i=1}^n u_{i,k} [\hat P_{i,k} + (\hat x_k-\hat x_{i,k})(\hat x_k-\hat x_{i,k})^T]
-$$
+```
 
 ### $IMM$ 的五个步骤
 
