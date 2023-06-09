@@ -15,7 +15,7 @@ $$
 
 状态转移函数：
 
-$$
+```math
 \vec X_{t+1} = 
 \left [ \begin{array} {}
 
@@ -25,11 +25,11 @@ v_x \\
 v_y
 
 \end{array} \right]
-$$
+```
 
 状态转移矩阵：
 
-$$
+```math
 A = 
 \left[ \begin {array} {}
 1,0,\Delta t,0 \\
@@ -38,13 +38,13 @@ A =
 0,0,0,1
 
 \end{array} \right]
-$$
+```
 
 - CA
 
 状态转移函数：
 
-$$
+```math
 \vec x_{t+1} = 
 
 \left[ \begin {array} {}
@@ -60,11 +60,11 @@ a_y
 
 \end{array} \right]
 
-$$
+```
 
 状态转移矩阵：
 
-$$
+```math
 A = 
 \left[ \begin {array} {}
 1,0,\ \Delta t,\ 0, \ 0.5*\Delta t^2, \ 0 \\
@@ -76,7 +76,7 @@ A =
 0, \  0,0,1,0, \ \  \Delta t
 
 \end{array} \right]
-$$
+```
 
 对于线性模型直接使用线性卡尔曼滤波。
 
