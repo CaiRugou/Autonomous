@@ -133,15 +133,15 @@ $$
 通过公式 $h(x)$ 我们可以把预测状态空间转换为测量状态空间。
 
 $$
-\Zeta = h(\chi)
+Z = h(\chi)
 $$
 
 $$
-\hat {z} = \sum _{i=0}^{2n} \omega^{[i]} \Zeta ^{[i]}
+\hat {z} = \sum _{i=0}^{2n} \omega^{[i]} Z ^{[i]}
 $$
 
 ```math
-S = \sum _{i=0}^{2n} \omega^{[i]} (\Zeta^{[i]} - \hat z)(\Zeta^{[i]} - \hat z)^T + Q
+S = \sum _{i=0}^{2n} \omega^{[i]} (Z^{[i]} - \hat z)(Z^{[i]} - \hat z)^T + Q
 ```
 
  $\Zeta$  把预测空间 $sigma$ 点的 $\chi$ 转为测量空间， $\hat z$ 预测 $sigma$ 点再测量空间的的均值， $S$ 协方差矩阵， $Q$ 是测量噪声。
