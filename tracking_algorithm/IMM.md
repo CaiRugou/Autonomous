@@ -173,7 +173,7 @@ $$
 ：
 
 ```math
-\lambda _{ij,k-1} = {{p_{ij}u_{i,k-1}} \over {{\sum{^n}_{i=1}} p_{ij}u_{i,k-1}}}
+\lambda _{ij,k-1} = {{p_{ij}u_{i,k-1}} \over {{\sum {^n}_{i=1}} p_{ij}u_{i,k-1}}}
 ```
 
 例如：
