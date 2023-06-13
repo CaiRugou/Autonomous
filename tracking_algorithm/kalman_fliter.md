@@ -334,7 +334,7 @@ K = P_kH^TS^{-1}
 $$
 
 $$
-\hat x^{'} = x + (K y)
+\hat x^{'} = \hat x_k + (K y)
 $$
 
 $$
