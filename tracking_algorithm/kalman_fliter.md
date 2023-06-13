@@ -223,11 +223,11 @@ $$
 对比标准高斯分布概率密度函数，相乘的结果是**一个乘了特定系数的高斯概率密度函数**，并且可以求解得到这个新的高斯分布的均值和方差分别为：
 
 $$
-u^` = u_0 + {{\delta_0^2(u_1 - u_0)} \over {\delta_0^2 + \delta_1^2}}
+u^{'} = u_0 + {{\delta_0^2(u_1 - u_0)} \over {\delta_0^2 + \delta_1^2}}
 $$
 
 $$
-\delta^{`2} = \delta_0^2 - {{\delta_0^4} \over {\delta_0^2 + \delta_1^2}}
+\delta^{{'}2} = \delta_0^2 - {{\delta_0^4} \over {\delta_0^2 + \delta_1^2}}
 $$
 
 ## 新的高斯分布
@@ -241,27 +241,27 @@ $$
 代入到上文中的高斯分布的均值和方差中，得到：
 
 $$
-u^` = u_0 + {\color{red}k}(u_1 - u_0)
+u^{'} = u_0 + {\color{red}k}(u_1 - u_0)
 $$
 
 $$
-\delta^{`2} = \delta_0^2 - {\color{red}k}\delta_0^2
+\delta^{{'}2} = \delta_0^2 - {\color{red}k}\delta_0^2
 $$
 
 将上述公式写成矩阵形式：
 
 $$
-{\color{red}K} = \sum_0(\sum_0 + \sum_1)^{-1}
+{\color{red}K} = \sum_{0}(\sum_0 + \sum_1)^{-1}
 $$
 
 这里除以某矩阵就相当于乘以该矩阵的逆。
 
 $$
-\vec u^` = \vec u_0 + {\color{red}K}(\vec u_1 - \vec u_0)
+\vec u^{'} = \vec u_0 + {\color{red}K}(\vec u_1 - \vec u_0)
 $$
 
 $$
-\sum` = \sum_0 - {\color{red}K}\sum_0
+\sum{'} = \sum_0 - {\color{red}K}\sum_0
 $$
 
 前面我们已经得到了预测结果和观测结果服从两个高斯分布，如下：
@@ -274,37 +274,37 @@ $$
 (\vec u_1, \sum_1) = (z_k, R_k)
 $$
 
-为了得到卡尔曼滤波对** *当前状态*的最优估计**的计算方程：
+为了得到卡尔曼滤波对***当前状态*的最优估计**的计算方程：
 
 $$
 {\color{red}K} = H_kP_kH_k^T(H_kP_kH_k^T  + R_k) ^ {-1}
 $$
 
 $$
-H_k \hat {x^`}_k  =  H_k\hat x_k + {\color{red}K}(z_k - H_k\vec x_k)
+H_k \hat {x^{'}}_k  =  H_k\hat x_k + {\color{red}K}(z_k - H_k\vec x_k)
 $$
 
 $$
-H_kP^`_kH^T_k = H_kP_kH^T_k - {\color{red}K}H_kP_kH^T_k
+H_kP^{'}_kH^T_k = H_kP_kH^T_k - {\color{red}K}H_kP_kH^T_k
 $$
 
 上式中都是在观测单位下的计算，我们需要进行下一状态估计计算需要将观测量转为**预测状态量**， 通过左乘 $H$ 的逆矩阵：
 
 
 $$
-{\color{red}K^`} = P_kH_k^T(H_kP_kH_k^T + R_k)^{-1}
+{\color{red}K^{'}} = P_kH_k^T(H_kP_kH_k^T + R_k)^{-1}
 $$
 
 
-$$
-\hat x^·_k = \hat x_k + {\color{red}K^`}(z_k -H_k \hat x_k)
-$$
+```math
+\hat x^{'}_k = \hat x_k + {\color{red}K^{'}}(z_k -H_k \hat x_k)
+```
 
 ```math
 P^`_k = P_k - {\color{red}K^`}H_kP_k
 ```
 
-此处的 ${\color{red}K^`}$ 就是**预测状态量卡尔曼增益**：
+此处的 ${\color{red}K^{'}}$ 就是**预测状态量卡尔曼增益**：
 
 
 ## 整理卡尔曼滤波过程
@@ -334,11 +334,11 @@ K = P_kH^TS^{-1}
 $$
 
 $$
-\hat x^` = x + (K y)
+\hat x^{'} = x + (K y)
 $$
 
 $$
-\hat P^` = (I -(K*H))*P
+\hat P^{'} = (I -(K*H))*P
 $$
 
 上述的公式：
@@ -348,9 +348,9 @@ $$
  
   $K$ 是预测量卡尔曼增益， 
  
- $\hat {x^`}$ 系统预测最优估计值， 
+ $\hat {x^{'}}$ 系统预测最优估计值， 
  
- $\hat {P^`}$ 是系统预测最优估计的协方差， 
+ $\hat {P^{'}}$ 是系统预测最优估计的协方差， 
  
  $Q$ 是外部影响的协方差， 
  
