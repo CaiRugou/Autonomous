@@ -28,3 +28,55 @@
 
 ## PointPillars 网络结构
 
+- 1 PFN (Pillar Feature Net)  就是伪图片特征提取过程。
+
+- 2 Backbone 通过 2D CNN 的两层网络，第一个网络 **不断缩小特征图的分辨率**，同时 **提升特征图的维度**， 最终可以获得**三个**不同分辨率的特征图； 第二个网络对**三个特征图**进行上采样到相同的大小（分辨率）。然后再进行连接。
+
+- 3 选择这样的主干网络，是因为**不同分辨率的特征图负责不同大小物体的检测**。比如分辨率大的特征图**感受野**较小，适合捕捉小物体。
+
+以上就是PointPillars的整个网路结构。
+
+## 损失函数
+
+PointPillars的损失函数，作者采用了和SECOND中类似的损失函数，每个3D BBOX用一个 $7$ 维的向量表示，分别为 $(x,y,z,w,h,l,\theta)$  。
+其中， $(x,y,z)$ 为box的中心， $w,h,l$ 是box的尺寸， $\theta$ 为方向角(主方向)。
+
+那么检测框回归任务重要学习的参数为这 $7$ 个变量的**偏移量**。
+
+```math
+
+\Delta x = {{x^{gt} - x^a} \over d^a} \\
+
+\Delta y = {{y^{gt} - y^a} \over d^a} \\
+
+\Delta z = {{z^{gt} - z^a} \over d^a} \\
+
+\Delta w = log {w^{gt}\over w^a} \\
+
+\Delta l = log {l^{gt}\over l^a} \\
+
+\Delta h = log {h^{gt}\over h^a} \\
+
+\Delta \theta = sin(\theta ^{gt} - \theta ^a)
+
+```
+
+作者采用了 $Smooth \ L1$ 损失函数进行训练：
+
+```math
+L_{loc} = \sum _{b \in (x,y,z,w,l,h,\theta)} SmoothL1(\Delta b)
+```
+
+为了避免方向判别错误，引入了Softmax损失 **学习物体的方向** 。 该方向记作 $L_{dir}$ 。
+
+分类损失函数采用了 Focal Loss, 定义如下：
+
+```math
+L_{cls} = -\alpha _a (1-p^a)^{\gamma} log p^a
+```
+
+最终总函数定义如下：
+
+```math
+L = {1\over N}(\beta _{loc}L_{loc} + \beta _{cls}L_{cls} + \beta_{dir}L_{dir})
+```
